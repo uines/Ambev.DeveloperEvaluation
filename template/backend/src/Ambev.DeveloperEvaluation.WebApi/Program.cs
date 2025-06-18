@@ -78,6 +78,17 @@ public class Program
             });
 
             builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngularDevClient",
+                    b =>
+                    {
+                        b.WithOrigins("http://localhost:4200")
+                         .AllowAnyHeader()
+                         .AllowAnyMethod();
+                    });
+            });
 
             var app = builder.Build();
             app.UseMiddleware<ValidationExceptionMiddleware>();
@@ -89,6 +100,8 @@ public class Program
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowAngularDevClient"); // Aplicar a política de CORS
 
             app.UseAuthentication();
             app.UseAuthorization();

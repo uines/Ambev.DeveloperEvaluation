@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+/* Regras personalizadas do seu CSS original para o body e logo-text */
+body {
+    font-family: "Inter", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8; /* Um cinza claro para o fundo */
+}
+
+/* Ajustes para o logo/texto Ambev - se você não usar a classe do tailwind*/
+/* Se você usou `font-helvetica-neue` no `tailwind.config.js`, pode usar a classe no HTML */
+/* Caso contrário, pode manter ou remover este bloco se for só texto */
+.ambev-logo-text {
+    font-family: 'Helvetica Neue', Arial, sans-serif; /* Fonte para o logo, se for texto */
+    font-weight: bold;
+    font-size: 2.25rem; /* Ajusta o tamanho da fonte */
+}
