@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace Ambev.DeveloperEvaluation.Application.Sales.DTO
+namespace Ambev.DeveloperEvaluation.Application.Sales.GetSale
 {
     /// <summary>
     /// Data Transfer Object for ProductSale.
     /// </summary>
-    public class ResponseProductSaleDTO
+    public class GetProductSaleResult
     {
 
         /// <summary>

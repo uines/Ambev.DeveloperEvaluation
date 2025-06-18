@@ -1,4 +1,4 @@
-using Ambev.DeveloperEvaluation.Application.Sales.DTO;
+using Ambev.DeveloperEvaluation.Application.Sales.Common;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale;
@@ -21,7 +21,7 @@ public class CreateSaleResponse
     /// <summary>
     /// The customer who purchased
     /// </summary>
-    public string Customer { get; set; } = string.Empty;
+    public Guid CustomerId { get; set; }
 
     /// <summary>
     /// The total purchase price
@@ -36,12 +36,12 @@ public class CreateSaleResponse
     /// <summary>
     /// The products of sale
     /// </summary>
-    public List<ResponseProductSaleDTO> Products { get; set; } = new List<ResponseProductSaleDTO>();
+    public List<ProductSaleResult> Products { get; set; } = new List<ProductSaleResult>();
 
     /// <summary>
     /// Sale is canceled true or false
     /// </summary>
     public bool IsCanceled { get; set; }
 
-    public decimal OriginTotalPrice { get; set; }
+    public decimal OriginalTotalPrice { get; set; }
 }

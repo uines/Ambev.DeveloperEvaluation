@@ -15,7 +15,7 @@ public class Sale : BaseEntity
     /// <summary>
     /// The customer who purchased
     /// </summary>
-    public string Customer { get; set; } = string.Empty;
+    public Guid CustomerId { get; set; }
 
     /// <summary>
     /// The total purchase price
@@ -37,7 +37,7 @@ public class Sale : BaseEntity
     /// </summary>
     public bool IsCanceled { get; set; }
 
-    public decimal OriginTotalPrice { get; set; }
+    public decimal OriginalTotalPrice { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the Sale class.
@@ -53,6 +53,6 @@ public class Sale : BaseEntity
     public void CalculateTotalSaleAmount()
     {
         TotalSaleAmount = Products.Sum(p => p.Quantity * p.UnitPrice);
-        OriginTotalPrice = Products.Sum(p => p.Quantity * p.OriginalUnitPrice);
+        OriginalTotalPrice = Products.Sum(p => p.Quantity * p.OriginalUnitPrice);
     }
 }

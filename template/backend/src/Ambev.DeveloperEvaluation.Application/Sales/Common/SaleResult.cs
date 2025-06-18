@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Ambev.DeveloperEvaluation.Domain.Entities;
 
-namespace Ambev.DeveloperEvaluation.Application.Sales.DTO
+namespace Ambev.DeveloperEvaluation.Application.Sales.Common
 {
-    /// <summary>
-    /// Data Transfer Object for Sale.
-    /// </summary>
-    public class CreateSaleDTO
+    public class SaleResult
     {
         /// <summary>
         /// The id of the sale.
@@ -21,12 +17,12 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.DTO
         /// <summary>
         /// The customer who purchased.
         /// </summary>
-        public string Customer { get; set; } = string.Empty;
+        public Guid CustomerId { get; set; }
 
-        /// <summary>
-        /// The total purchase price.
-        /// </summary>
-        public decimal TotalSaleAmount { get; set; }
+		/// <summary>
+		/// The total purchase price.
+		/// </summary>
+		public decimal TotalSaleAmount { get; set; }
 
         /// <summary>
         /// Where the sale was made.
@@ -41,6 +37,8 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.DTO
         /// <summary>
         /// The products included in the sale.
         /// </summary>
-        public List<CreateProductSaleDTO> Products { get; set; } = new List<CreateProductSaleDTO>();
+        public List<ProductSaleResult> Products { get; set; } = new List<ProductSaleResult>();
+
+        public decimal OriginalTotalPrice { get; set; }
     }
 }

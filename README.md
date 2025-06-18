@@ -1,6 +1,14 @@
 # Developer Evaluation Project
 
-`READ CAREFULLY`
+**Para rodar o projeto:**
+
+1. Acesse o diretório `template/backend`.
+2. Execute o comando `docker compose up -d` para iniciar os contêineres e ter acesso à base de dados.
+3. Navegue para `template/backend/src/Ambev.DeveloperEvaluation.WebApi`.
+4. Execute o comando `dotnet ef database update` para aplicar as migrações do banco de dados.
+5. Acesse o Swagger em `https://localhost:PORTA/swagger/index.html` (substitua `PORTA` pela porta da aplicação).
+6. Crie um usuário utilizando os endpoints da API no Swagger.
+7. Autentique o usuário para obter um token JWT. Adicione este token no Swagger (botão "Authorize", prefixo `Bearer `) para testar os endpoints protegidos.
 
 ## Instructions
 **The test below will have up to 7 calendar days to be delivered from the date of receipt of this manual.**

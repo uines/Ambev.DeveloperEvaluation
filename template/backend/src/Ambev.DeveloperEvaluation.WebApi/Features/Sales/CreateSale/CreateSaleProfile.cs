@@ -1,5 +1,5 @@
+using Ambev.DeveloperEvaluation.Application.Sales.Common;
 using Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
-using Ambev.DeveloperEvaluation.Application.Sales.DTO;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using AutoMapper;
 
@@ -15,14 +15,7 @@ public class CreateSaleProfile : Profile
     /// </summary>
     public CreateSaleProfile()
     {
+        CreateMap<SaleResult, CreateSaleResponse>();
         CreateMap<CreateSaleRequest, CreateSaleCommand>();
-        CreateMap<ResponseProductSaleDTO, ProductSale>()
-            .ForMember(dest => dest.Id, opt => opt.Ignore())
-            .ForMember(dest => dest.TotalAmount, opt => opt.MapFrom(src => src.Quantity * src.UnitPrice));
-        CreateMap<CreateSaleCommand, Sale>();
-        CreateMap<CreateProductSaleDTO, ProductSale>().ReverseMap();
-        CreateMap<Sale, CreateSaleResult>();
-        CreateMap<ProductSale, ResponseProductSaleDTO>();
-        CreateMap<CreateSaleResult, CreateSaleResponse>();
     }
 }

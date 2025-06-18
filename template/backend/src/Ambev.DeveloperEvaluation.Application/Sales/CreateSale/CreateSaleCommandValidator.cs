@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Sales.DTO;
+﻿using Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 using FluentValidation;
  
 namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
@@ -10,12 +10,11 @@ public class CreateSaleCommandValidator : AbstractValidator<CreateSaleCommand>
 {
     public CreateSaleCommandValidator()
     {
-        RuleFor(command => command.Customer)
-            .NotEmpty().WithMessage("Customer name is required.")
-            .MaximumLength(100).WithMessage("Customer name cannot exceed 100 characters.");
+        RuleFor(command => command.CustomerId)
+            .NotEmpty().WithMessage("Customer is required.");
 
-        RuleFor(command => command.Branch)
-            .MaximumLength(100).WithMessage("Branch name cannot exceed 100 characters."); // Pode ser opcional
+        RuleFor(request => request.Branch)
+             .NotEmpty().WithMessage("Branch name is required.");
 
         RuleFor(command => command.Products)
             .NotEmpty().WithMessage("At least one product is required for the sale.")
@@ -26,13 +25,13 @@ public class CreateSaleCommandValidator : AbstractValidator<CreateSaleCommand>
 /// <summary>
 /// Validator for ProductSaleDTO within a CreateSaleCommand.
 /// </summary>
-public class ProductSaleDtoCommandValidator : AbstractValidator<CreateProductSaleDTO>
+public class ProductSaleDtoCommandValidator : AbstractValidator<CreateProductSale>
 {
     public ProductSaleDtoCommandValidator()
-    { // Renomeado para evitar conflito de nome se ProductSaleDto fosse usado diretamente
-        RuleFor(p => p.Name).NotEmpty().MaximumLength(100);
-        RuleFor(p => p.Quantity).GreaterThan(0);
+    {
+        RuleFor(p => p.Name).NotEmpty().WithMessage("Product name is required.");
+        RuleFor(p => p.Quantity).GreaterThan(0).WithMessage("Product quantity must be greater than zero.");
         RuleFor(p => p.Quantity).LessThanOrEqualTo(20).WithMessage("It's not possible to sell above 20 identical items.");
-        RuleFor(p => p.UnitPrice).GreaterThan(0);
+        RuleFor(p => p.UnitPrice).GreaterThan(0).WithMessage("Product unit price must be greater than zero.");
     }
 }

@@ -1,10 +1,8 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Sales.Common;
 using Ambev.DeveloperEvaluation.Common.Validation;
-using Ambev.DeveloperEvaluation.Domain.Entities;
-using Ambev.DeveloperEvaluation.Domain.Enums;
 using MediatR;
 
-namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
+namespace Ambev.DeveloperEvaluation.Application.Sales.CancelSale;
 
 /// <summary>
 /// Command for creating a new Sale.
@@ -19,28 +17,16 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 /// <see cref="AbstractValidator{T}"/> to ensure that the fields are correctly 
 /// populated and follow the required rules.
 /// </remarks>
-public class CreateSaleCommand : IRequest<SaleResult>
+public class CancelSaleCommand : IRequest<CancelSaleResult>
 {
-    /// <summary>
+    /// <summary>{
     /// The customer who purchased
     /// </summary>
-    public Guid CustomerId { get; set; }
+    public Guid Id { get; set; }
 
-
-    /// <summary>
-    /// Where the sale was made
-    /// </summary>
-    public string Branch { get; set; } = string.Empty;
-
-    /// <summary>
-    /// The products of sale
-    /// </summary>
-    public List<CreateProductSale> Products { get; set; } = new List<CreateProductSale>();
-
-    public decimal OriginalTotalPrice { get; set; }
     public ValidationResultDetail Validate()
     {
-        var validator = new CreateSaleCommandValidator();
+        var validator = new CancelSaleCommandValidator();
         var result = validator.Validate(this);
         return new ValidationResultDetail
         {

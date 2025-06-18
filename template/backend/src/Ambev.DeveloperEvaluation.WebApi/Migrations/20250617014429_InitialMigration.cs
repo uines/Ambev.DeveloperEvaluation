@@ -6,27 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Ambev.DeveloperEvaluation.WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigrations : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Sales",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Customer = table.Column<string>(type: "text", nullable: false),
-                    TotalSaleAmount = table.Column<decimal>(type: "numeric", nullable: false),
-                    Branch = table.Column<string>(type: "text", nullable: false),
-                    IsCanceled = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Sales", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
@@ -47,6 +31,29 @@ namespace Ambev.DeveloperEvaluation.WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Sales",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TotalSaleAmount = table.Column<decimal>(type: "numeric", nullable: false),
+                    Branch = table.Column<string>(type: "text", nullable: false),
+                    IsCanceled = table.Column<bool>(type: "boolean", nullable: false),
+                    OriginalTotalPrice = table.Column<decimal>(type: "numeric", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sales", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Sales_Users_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProductsSale",
                 columns: table => new
                 {
@@ -55,7 +62,9 @@ namespace Ambev.DeveloperEvaluation.WebApi.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
                     UnitPrice = table.Column<decimal>(type: "numeric", nullable: false),
-                    TotalAmount = table.Column<decimal>(type: "numeric", nullable: false)
+                    TotalAmount = table.Column<decimal>(type: "numeric", nullable: false),
+                    OriginalUnitPrice = table.Column<decimal>(type: "numeric", nullable: false),
+                    DiscountPercentage = table.Column<decimal>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -72,6 +81,11 @@ namespace Ambev.DeveloperEvaluation.WebApi.Migrations
                 name: "IX_ProductsSale_SaleId",
                 table: "ProductsSale",
                 column: "SaleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sales_CustomerId",
+                table: "Sales",
+                column: "CustomerId");
         }
 
         /// <inheritdoc />
@@ -81,10 +95,10 @@ namespace Ambev.DeveloperEvaluation.WebApi.Migrations
                 name: "ProductsSale");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Sales");
 
             migrationBuilder.DropTable(
-                name: "Sales");
+                name: "Users");
         }
     }
 }
