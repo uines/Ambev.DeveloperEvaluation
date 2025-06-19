@@ -84,7 +84,7 @@ public class Program
                 options.AddPolicy("AllowAngularDevClient",
                     b =>
                     {
-                        b.WithOrigins("http://localhost:4200")
+                        b.WithOrigins("*")
                          .AllowAnyHeader()
                          .AllowAnyMethod();
                     });
