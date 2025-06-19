@@ -9,7 +9,6 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Cart
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
     public class CartController : BaseController
     {
         private readonly IMediator _mediator;

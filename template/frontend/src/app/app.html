@@ -1,16 +1,26 @@
 <header class="bg-ambev-blue text-white p-4 shadow-md">
     <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
-        <img
-            src="assets/ambev.svg"
-            alt="Logotipo Ambev"
-            width="200"
-        />
+        <a routerLink="/"><img src="assets/ambev.svg" alt="Logotipo Ambev" width="200" /></a>
 
         <nav>
             <ul class="flex space-x-6 text-lg" style="color: black;">
-                <li><a routerLink="/" routerLinkActive="text-ambev-yellow" class="hover:text-ambev-yellow transition duration-300 ease-in-out rounded-md p-2">Início</a></li>
-                <li><a href="/cart" class="hover:text-ambev-yellow transition duration-300 ease-in-out rounded-md p-2">Meu Carrinho</a></li>
-                <li><a routerLink="/login" routerLinkActive="text-ambev-yellow" class="hover:text-ambev-yellow transition duration-300 ease-in-out rounded-md p-2">Login</a></li>
+                <li><a routerLink="/" routerLinkActive="text-ambev-yellow"
+                        class="hover:text-ambev-yellow transition duration-300 ease-in-out rounded-md p-2">Início</a>
+                </li>
+                <li><a routerLink="/cart"
+                        class="hover:text-ambev-yellow transition duration-300 ease-in-out rounded-md p-2">Meu
+                        Carrinho</a></li>
+                <li *ngIf="isLoggedIn()"><a routerLink="/my-orders"
+                        class="hover:text-ambev-yellow transition duration-300 ease-in-out rounded-md p-2">Meus
+                        Pedidos</a>
+                </li>
+                <li *ngIf="!isLoggedIn()"><a routerLink="/login" routerLinkActive="text-ambev-yellow"
+                        class="hover:text-ambev-yellow transition duration-300 ease-in-out rounded-md p-2">Login</a>
+                </li>
+                <li *ngIf="isLoggedIn()">
+                    <a (click)="logout()" routerLinkActive="text-ambev-yellow"
+                        class="hover:text-ambev-yellow transition duration-300 ease-in-out rounded-md p-2 cursor-pointer">Logout</a>
+                </li>
             </ul>
         </nav>
     </div>

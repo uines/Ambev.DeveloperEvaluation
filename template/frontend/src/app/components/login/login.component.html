@@ -1,5 +1,8 @@
 <div class="login-container p-8 max-w-md mx-auto bg-white shadow-md rounded-lg mt-10">
   <h2 class="text-2xl font-bold mb-6 text-center text-ambev-blue">Login</h2>
+  <div *ngIf="isLoading" class="loading-indicator">
+    Efetuando login...
+  </div>
   <form (ngSubmit)="onLogin()" #loginForm="ngForm">
     <div class="mb-4">
       <label for="username" class="block text-sm font-medium text-gray-700">E-mail:</label>
@@ -37,4 +40,6 @@
   <div *ngIf="loginSuccess" class="mt-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
     {{ loginSuccess }}
   </div>
+  <app-modal [isOpen]="isModalOpen" [title]="modalTitle" [message]="modalMessage" (closed)="closeDialog()">
+    </app-modal>
 </div>

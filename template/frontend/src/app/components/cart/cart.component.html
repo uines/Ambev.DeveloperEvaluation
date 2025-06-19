@@ -1,5 +1,5 @@
 <div class="cart-container">
-  <h2>Seu Carrinho</h2>
+  <h2 class="text-4xl font-bold text-ambev-blue text-center mb-8">Seu Carrinho</h2>
   <ng-container *ngIf="cartItems$ | async as items; else emptyCart">
     <div *ngIf="items.length > 0; else emptyCart">
       <table>
@@ -24,22 +24,18 @@
             <td>{{ (item.product.discountPercentage || 0) }}%</td>
             <td>
               <input type="number"
-                    [ngModel]="item.quantityInCart"
-                     (ngModelChange)="updateCart(item.product, item.quantityInCart)"
+                    [ngModel]="item.addToCart"
+                     (change)="updateCart(item.product, $event)"
                      min="1"
                      class="w-16 text-center border border-gray-300 rounded-md py-1 px-2 focus:outline-none focus:ring-2 focus:ring-ambev-blue focus:border-transparent" />
-              <!-- TODO: Adicionar botões para alterar quantidade -->
             </td>
             <td>{{ (item.product.unitPrice * item.product.quantity) | currency:'BRL' }}</td>
-            <!-- <td>
-              <button (click)="removeFromCart(item.product.productId)">Remover</button>
-            </td> -->
           </tr>
         </tbody>
       </table>
       <div class="cart-summary">
         <h3>Total do Carrinho: {{ getTotalPrice(items) | currency:'BRL' }}</h3>
-        <button class="checkout-button">Finalizar Compra</button>
+        <button class="checkout-button" (click)="checkout(items)">Finalizar Compra</button>
       </div>
     </div>
   </ng-container>
