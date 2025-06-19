@@ -40,12 +40,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales
 
             var response = await _mediator.Send(command, cancellationToken);
             var createdResponse = _mapper.Map<CreateSaleResponse>(response);
-            return CreatedAtAction(string.Empty, new ApiResponseWithData<CreateSaleResponse>
-            {
-                Success = true,
-                Message = "Sale successfully",
-                Data = createdResponse
-            });
+            return Ok(createdResponse);
         }
 
         /// <summary>
@@ -62,11 +57,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales
             command.CustomerId = GetCurrentUserId();
             var salesResult  = await _mediator.Send(command, cancellationToken);
 
-            return Ok(new ApiResponseWithData<List<SaleResult>>
-            {
-                Success = true,
-                Data = salesResult 
-            });
+            return Ok(salesResult);
         }
 
         /// <summary>
@@ -87,11 +78,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales
             if (queryResult == null)
                 return NotFound(new ApiResponse { Success = false, Message = "Sale not found." });
 
-            return Ok(new ApiResponseWithData<SaleResult>
-            {
-                Success = true,
-                Data = _mapper.Map<SaleResult>(queryResult)
-            });
+            return Ok(_mapper.Map<SaleResult>(queryResult));
         }
 
         [HttpPost("{id:guid}/cancel")]
@@ -110,11 +97,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales
         public async Task<IActionResult> UpdateSale(UpdateSaleCommand command, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(command, cancellationToken);
-            return Ok(new ApiResponseWithData<SaleResult>
-            {
-                Success = true,
-                Data = _mapper.Map<SaleResult>(result)
-            });
+            return Ok(_mapper.Map<SaleResult>(result));
         }
     }
 }

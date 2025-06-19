@@ -10,6 +10,12 @@
 6. Crie um usuário utilizando os endpoints da API no Swagger.
 7. Autentique o usuário para obter um token JWT. Adicione este token no Swagger (botão "Authorize", prefixo `Bearer `) para testar os endpoints protegidos.
 
+**Rodar FrondEnd**
+1. Acesse o diretório `template/frontend` no terminal.
+2. Rodar comando `npm install`
+3. Após instalação rodar o comando `npm start`
+4. Para alterar a url de acesso a API editar o arquivo `template\frontend\src\environments\environment.ts`
+
 ## Instructions
 **The test below will have up to 7 calendar days to be delivered from the date of receipt of this manual.**
 

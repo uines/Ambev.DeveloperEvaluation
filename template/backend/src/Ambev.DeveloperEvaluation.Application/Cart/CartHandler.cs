@@ -7,23 +7,23 @@ using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
+namespace Ambev.DeveloperEvaluation.Application.Cart;
 
 /// <summary>
-/// Handler for processing CreateSaleCommand requests
+/// Handler for processing CartCommand requests
 /// </summary>
-public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, SaleResult>
+public class CartHandler : IRequestHandler<CartCommand, CartResult>
 {
     private readonly ISaleRepository _saleRepository;
     private readonly IMapper _mapper;
-    private readonly ILogger<CreateSaleHandler> _logger;
+    private readonly ILogger<CartHandler> _logger;
 
     /// <summary>
-    /// Initializes a new instance of CreateSaleHandler
+    /// Initializes a new instance of CartHandler
     /// </summary>
     /// <param name="saleRepository">The sale repository</param>
     /// <param name="mapper">The AutoMapper instance</param>
-    public CreateSaleHandler(ISaleRepository saleRepository, IMapper mapper, ILogger<CreateSaleHandler> logger)
+    public CartHandler(ISaleRepository saleRepository, IMapper mapper, ILogger<CartHandler> logger)
     {
         _saleRepository = saleRepository;
         _mapper = mapper;
@@ -31,39 +31,26 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, SaleResult>
     }
 
     /// <summary>
-    /// Handles the CreateSaleCommand request
+    /// Handles the CartCommand request
     /// </summary>
-    /// <param name="command">The CreateSale command</param>
+    /// <param name="command">The Cart command</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The created sale details</returns>
-    public async Task<SaleResult> Handle(CreateSaleCommand command, CancellationToken cancellationToken)
+    public async Task<CartResult> Handle(CartCommand command, CancellationToken cancellationToken)
     {
-        Sale sale = _mapper.Map<Sale>(command);
-        sale.Products = command.Products.Select(p => {
-            ValidateProductQuantity(command.CustomerId, p.Quantity);
-            var productSale = new ProductSale
-            {
-                SaleId = sale.Id,
-                Name = p.Name,
-                Quantity = p.Quantity,
-                UnitPrice = p.UnitPrice
-            };
-            ApplyDiscount(productSale);
-            return productSale;
-        }).ToList();
+        ProductSale productSale = _mapper.Map<ProductSale>(command);
+        ValidateProductQuantity(productSale.Quantity);
+        ApplyDiscount(productSale);
 
-        sale.CalculateTotalSaleAmount();
-        var createdSale = await _saleRepository.CreateAsync(sale, cancellationToken);
-
-        var result = _mapper.Map<SaleResult>(createdSale);
+        var result = _mapper.Map<CartResult>(productSale);
         return result;
     }
 
-    private void ValidateProductQuantity(Guid customer, int quantity)
+    private void ValidateProductQuantity(int quantity)
     {
         if (quantity > 20)
         {
-            _logger.LogInformation("Customer {Customer} is attempting to purchase more than 20 identical items.", customer);
+            _logger.LogInformation("Customer is attempting to purchase more than 20 identical items.");
 
             throw new InvalidOperationException("Is not possible to sell more than 20 identical items.");
         }
